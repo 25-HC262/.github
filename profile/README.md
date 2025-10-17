@@ -52,6 +52,7 @@ width="80" height="100" alt="image" src="https://avatars.githubusercontent.com/u
 <img src="assets/service-flow.png" width="500" height="500" alt="service flow">
 
 - AI 모델 파이프라인
+![AI 모델 파이프라인]("assets/model-pipeline.png")
 <img src="assets/model-pipeline.png" width="500" height="500" alt="model pipeline">
 
 - 엔티티 관계도
