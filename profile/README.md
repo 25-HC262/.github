@@ -1,75 +1,69 @@
-## **💡1. 프로젝트 개요**
+## **1. 프로젝트 개요**
 
 **1-1. 프로젝트 소개**
-- 프로젝트 명 : 한이음 드림업 AI검색 서비스
-- 프로젝트 정의 : 사용자의 검색 의도를 이해하고 최적의 정보를 제공하는 AI 기반 맞춤형 검색 서비스
+- 프로젝트 명 : 실시간 수어 번역 오픈소스 프로그램 개발
+- 프로젝트 정의 : 화상 회의 환경에서 AI 기술을 통해 수어를 실시간으로 인식하고, 완전한 한국어 문장으로 번역하여 농인과 비농인 간의 원활한 소통을 지원하는 확장 프로그램
   <img width="400" height="400" alt="image" src="https://github.com/user-attachments/assets/b25d0039-dfc8-4a6f-85c0-567a92e4039f" /></br>
+<br>
 
 **1-2. 개발 배경 및 필요성**
-- 현대 사회는 방대한 정보가 실시간으로 생성되고 축적되고 있습니다. 그러나 사용자가 원하는 정확한 정보를 찾기 위해서는 여전히 많은 시간과 노력이 필요합니다. 기존 키워드 기반 검색 방식은 사용자의 맥락이나 의도를 충분히 반영하지 못해 효율성이 떨어집니다. 따라서 사용자의 검색 목적을 인공지능이 이해하고 개인화된 결과를 제공하는 맞춤형 검색 서비스가 필요합니다.
+- 비대면 소통이 확산됨에 따라 다양한 실시간 번역 서비스가 등장했지만, 대부분 음성 기반으로 개발되어 수어 사용자들은 기술 발전의 혜택에서 소외되고 있었습니다. 기존의 한국수어 번역 연구 또한 단어 수준의 인식에 머물러 있어, 실제 대화처럼 문맥을 이해하고 자연스러운 문장을 생성하는 데 한계가 있었습니다. 본 프로젝트는 이러한 기술적, 사회적 장벽을 넘어, 수어를 완전한 문장 단위로 번역하여 실질적인 의사소통을 지원하고자 시작되었습니다.
 
 **1-3. 프로젝트 특장점**
-- 사용자의 검색 의도와 맥락을 이해하는 자연어 이해 기반 검색 서비스
-- 단순 키워드 매칭이 아닌 의미 기반 정보 추천 및 순위화
-- 개인별 기록과 관심사를 반영한 맞춤형 검색 결과 제공
-- 다양한 데이터 소스를 연동해 멀티도메인 활용 가능성 확보
-- 최신 AI/ML 프레임워크와 대규모 언어모델(LLM)을 활용한 최적화된 사용자 경험
+- 높은 접근성 : 별도의 프로그램 설치 없이 기존에 사용하던 화상회의 플랫폼(Google Meet 등)에서 바로 사용할 수 있는 웹 확장 프로그램 형태로 개발하여 누구나 쉽게 이용할 수 있습니다.
+- 기술적 차별성 : MediaPipe로 추출한 3D 키포인트 데이터를 UMAP 알고리즘으로 압축하여 수어 동작의 핵심 특징만 추출합니다. 이를 통해 AI 모델의 학습 효율과 번역 정확도를 크게 향상했습니다.
+- 사용자 중심 설계 : 개발 초기부터 실제 농인 및 청인 수어 사용자와의 심층 인터뷰를 진행하여 자막 위치, 스크립트 제공 방식 등 실질적인 필요와 요구사항을 UI/UX 설계에 충실히 반영했습니다.
 
 **1-4. 주요 기능**
-- AI 맞춤 검색 서비스 : 검색 의도를 분석하고 개인화된 결과 제공
-- 자연어 질의 처리 : 키워드뿐 아니라 문장 단위 질문도 이해 가능
-- 의미 기반 추천 : 단순한 ‘정확 단어 일치’가 아닌 맥락과 의미를 기반으로 한 결과 제공
-- 맞춤형 필터링 및 정렬 : 사용자 성향에 따라 검색 결과 필터 및 순위 조정
-- 멀티플랫폼 지원 : 웹·모바일 등 다양한 기기 환경에서 최적화된 검색 경험 제공
+- 실시간 수어 인식 및 번역 : 화상회의 중 카메라를 통해 사용자의 수어 동작(손, 표정, 입 모양 등)을 실시간으로 인식하고, Transformer AI 모델을 통해 문맥에 맞는 자연스러운 한국어 문장으로 번역합니다.
+- 실시간 자막 및 스크립트 출력 : 번역된 내용은 즉시 화상회의 화면에 자막과 전체 대화 스크립트 형태로 출력되어 대화의 흐름을 쉽게 파악할 수 있습니다.
+- 번역 대상 선택 기능 : 회의 참여자 중 번역을 원하는 특정 인물의 화면을 직접 선택하여 해당 사용자의 수어만 집중적으로 번역할 수 있습니다.
+- 음성 출력(TTS) 기능 : 번역된 텍스트를 음성으로 변환하여 출력함으로써, 화면을 보기 어려운 상황에서도 소통을 지원합니다.
 
 **1-5. 기대 효과 및 활용 분야**
-- 기대 효과 : 검색 품질 향상 및 정보 탐색 효율 극대화, 다양한 산업 분야에서 데이터 활용성 확대
-- 활용 분야 : 학술·연구, 커머스·쇼핑, 헬스케어, 뉴스·미디어, 기업 내부 문서 검색 등
+- 기대 효과 : 수어 사용자의 비대면 교육, 원격 근무 등 사회 참여 기회를 확대하고 디지털 정보 격차를 해소합니다. 또한, 관련 기술과 데이터를 오픈소스로 공개하여 국내 수어 연구 생태계 발전에 기여합니다.
+- 활용 분야 : 원격 교육 및 화상 회의, 공공기관 및 금융권의 비대면 민원 서비스, 병원의 원격 진료 등 다양한 분야에서 활용될 수 있습니다.
 
 **1-6. 기술 스택**
-- 프론트엔드 : React, Next.js, Tailwind CSS
-- 백엔드 : Python(FastAPI), Node.js, Django
-- AI/ML : PyTorch, TensorFlow, Hugging Face, OpenAI API
-- 데이터베이스 : PostgreSQL, MongoDB, Elasticsearch
+- Client (Extension) : Javascript, Webpack, Chrome Extension API
+- Streaming Server : AWS EC2, WebSocket
+- AI / Model Server : Python, MediaPipe, UMAP, Transformer, TensorFlow Lite
 - 클라우드 : AWS
-- 배포 및 관리 : Docker, Kubernetes, GitHub Actions
+- 협업 및 관리 : Git, Github, Notion, Discord
 
 ---
 
-## **💡2. 팀원 소개**
-| <img width="80" height="100" src="https://github.com/user-attachments/assets/ab73bb1c-c1d4-464d-8ad3-635b45d5a8ae" > | <img width="80" height="100" alt="image" src="https://github.com/user-attachments/assets/c7f66b7c-ab84-41fa-8fba-b49dba28b677" > | <img width="80" height="100" alt="image" src="https://github.com/user-attachments/assets/c33252c7-3bf6-43cf-beaa-a9e2d9bd090b" > | <img width="80" height="100" alt="image" src="https://github.com/user-attachments/assets/0d5909f0-fc73-4ab9-be09-4d48e3e71083" > | <img width="80" height="100" alt="image" src="https://github.com/user-attachments/assets/c7f66b7c-ab84-41fa-8fba-b49dba28b677" > |
+## **2. 팀원 소개**
+| <img width="80" height="100" src="https://avatars.githubusercontent.com/u/93801149?v=4" > | <img 
+width="80" height="100" alt="image" src="https://avatars.githubusercontent.com/u/102636528?v=4" > | <img 
+width="80" height="100" alt="image" src="https://avatars.githubusercontent.com/u/104704651?v=4" > | <img 
+width="80" height="100" alt="image" src="https://avatars.githubusercontent.com/u/33688069?v=4" > |
 |:---:|:---:|:---:|:---:|:---:|
-| **홍길동** | **한이음** | **최지수** | **이철수** | **김멘토** |
-| • 개발총괄 <br> • UI/UX 기획 | • 백엔드 <br> • 프론트엔드 | • API 개발 <br> • DB 서버 구축 |• 데이터 분석 <br> • 전처리 | • 프로젝트 멘토 <br> • 기술 자문 |
-
+| [**최은소**](https://github.com/esc-beep) | [**문채일**](https://github.com/chae2) | [**정민서**](https://github.com/M-J1nx) | [**박은규**](https://github.com/eunkyui) |
+| • PM <br> • 머신러닝 모델 개발  <br> • 데이터 엔지니어링 | • 머신러닝 모델 개발  <br> • 데이터 엔지니어링 | • 시스템 설계 <br> • 소프트웨어 개발 | • 프로젝트 멘토 <br> • 기술 자문 |
 
 
 ---
-## **💡3. 시스템 구성도**
-> **(참고)** S/W구성도, H/W구성도, 서비스 흐름도 등을 작성합니다. 시스템의 동작 과정 등을 추가할 수도 있습니다.
+## **3. 시스템 구성도**
 - 서비스 구성도
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/28fc8453-d1a0-4184-8fd0-130d93d18545" />
+<img src="assets/architecture.png" width="500" height="500" alt="architecture diagram">
 
+- 서비스 흐름도
+<img src="assets/service-flow.png" width="500" height="500" alt="service flow">
+
+- AI 모델 파이프라인
+<img src="assets/model-pipeline.png" width="500" height="500" alt="model pipeline">
 
 - 엔티티 관계도
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/76e3347b-6d94-491e-8aeb-a7b4601c54d5" />
 
 
 ---
-## **💡4. 작품 소개영상**
-> **참고**: 썸네일과 유튜브 영상을 등록하는 방법입니다.
-```Python
-아래와 같이 작성하면, 썸네일과 링크등록을 할 수 있습니다.
-[![영상 제목](유튜브 썸네일 URL)](유튜브 영상 URL)
-
-작성 예시 : 저는 다음과 같이 작성하니, 아래와 같이 링크가 연결된 썸네일 이미지가 등록되었네요! 
-[![한이음 드림업 프로젝트 소개](https://github.com/user-attachments/assets/16435f88-e7d3-4e45-a128-3d32648d2d84)](https://youtu.be/YcD3Lbn2FRI?si=isERqIAT9Aqvdqwp)
-```
-[![한이음 드림업 프로젝트 소개](https://github.com/user-attachments/assets/16435f88-e7d3-4e45-a128-3d32648d2d84)](https://youtu.be/YcD3Lbn2FRI?si=isERqIAT9Aqvdqwp)
-
+## **4. 작품 소개영상**
+[![2025 한이음 공모전 시연 영상](https://img.youtube.com/vi/mtEdTzg9rCE/maxresdefault.jpg)](https://youtu.be/mtEdTzg9rCE)
 
 ---
-## **💡5. 핵심 소스코드**
+## **5. 핵심 소스코드**
 - 소스코드 설명 : API를 활용해서 자동 배포를 생성하는 메서드입니다.
 
 ```Java
