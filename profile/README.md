@@ -51,40 +51,105 @@
 - AI 모델 파이프라인
 <img src="assets/model-pipeline.png" width="800" height="500" alt="model pipeline">
 
-- 엔티티 관계도
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/76e3347b-6d94-491e-8aeb-a7b4601c54d5" />
-
-
 ---
 ## **4. 작품 소개영상**
 [![2025 한이음 공모전 시연 영상](https://img.youtube.com/vi/mtEdTzg9rCE/maxresdefault.jpg)](https://youtu.be/mtEdTzg9rCE)
 
 ---
 ## **5. 핵심 소스코드**
-- 소스코드 설명 : API를 활용해서 자동 배포를 생성하는 메서드입니다.
+- 소스코드 설명 : Transformer 모델의 핵심 블록인 Multi head를 가진 Self-Attention 기법을 클래스로 구현한 코드입니다. @209sontong의 오픈소스를 활용했습니다.
 
-```Java
-    private static void start_deployment(JsonObject jsonObject) {
-        String user = jsonObject.get("user").getAsJsonObject().get("login").getAsString();
-        Map<String, String> map = new HashMap<>();
-        map.put("environment", "QA");
-        map.put("deploy_user", user);
-        Gson gson = new Gson();
-        String payload = gson.toJson(map);
+```Python
+    class MultiHeadSelfAttention(tf.keras.layers.Layer):
+        """
+        Multi-Head Self-Attention layer.
+        
+        Args:
+            dim (int): Dimension of the attention vectors.
+            num_heads (int): Number of attention heads.
+            dropout (float): Dropout rate.
 
-        try {
-            GitHub gitHub = GitHubBuilder.fromEnvironment().build();
-            GHRepository repository = gitHub.getRepository(
-                    jsonObject.get("head").getAsJsonObject()
-                            .get("repo").getAsJsonObject()
-                            .get("full_name").getAsString());
-            GHDeployment deployment =
-                    new GHDeploymentBuilder(
-                            repository,
-                            jsonObject.get("head").getAsJsonObject().get("sha").getAsString()
-                    ).description("Auto Deploy after merge").payload(payload).autoMerge(false).create();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+        Returns:
+            Output tensor after applying the multi-head self-attention mechanism.
+        """
+        def __init__(self, dim=256, num_heads=4, dropout=0, **kwargs):
+            super().__init__(**kwargs)
+            self.dim = dim
+            self.scale = self.dim ** -0.5
+            self.num_heads = num_heads
+            self.qkv = tf.keras.layers.Dense(3 * dim, use_bias=False)
+            self.drop1 = tf.keras.layers.Dropout(dropout)
+            self.proj = tf.keras.layers.Dense(dim, use_bias=False)
+            self.supports_masking = True
+
+        def call(self, inputs, mask=None):
+            """
+            Applies the multi-head self-attention mechanism to the input tensor.
+
+            Args:
+                inputs: Input tensor.
+                mask: Mask tensor indicating valid positions.
+
+            Returns:
+                Output tensor after applying the multi-head self-attention mechanism.
+            """
+            qkv = self.qkv(inputs)
+            qkv = tf.keras.layers.Permute((2, 1, 3))(tf.keras.layers.Reshape((-1, self.num_heads, self.dim * 3 // self.num_heads))(qkv))
+            q, k, v = tf.split(qkv, [self.dim // self.num_heads] * 3, axis=-1)
+
+            attn = tf.matmul(q, k, transpose_b=True) * self.scale
+
+            if mask is not None:
+                mask = mask[:, None, None, :]
+
+            attn = tf.keras.layers.Softmax(axis=-1)(attn, mask=mask)
+            attn = self.drop1(attn)
+
+            x = attn @ v
+            x = tf.keras.layers.Reshape((-1, self.dim))(tf.keras.layers.Permute((2, 1, 3))(x))
+            x = self.proj(x)
+            return x
+```
+
+- 소스코드 설명 : UMAP을 사용한 차원 축소 함수입니다.
+
+```Python
+    def train_reducer(self):
+        print("Converting tensorflow dataset to numpy array for UMAP fitting...")
+        self.embedder.fit(self.train_dataset)
+        print("Saving embedder model...")
+        Path(self.save_path).mkdir(parents=True, exist_ok=True)
+        self.embedder.save(self.save_path)
+
+        # 임베딩 결과 확인
+        print("Transforming data for visualization...")
+        embedding = self.embedder.transform(self.train_dataset)
+        print(f"Embedding shape: {embedding.shape}")
+
+        # pickle을 통해서 embedding 객체 저장하기
+        embedding_file_path = os.path.join(self.save_path, "embedding.pkl")
+        with open(embedding_file_path, 'wb') as ef:
+            pickle.dump(embedding, ef)
+        print(f"Saved embedding to {embedding_file_path}")
+
+        # 히스토리 출력
+        if hasattr(self.embedder, '_history'):
+            print("\n=== Training History ===")
+            for key, values in self.embedder._history.items():
+                print(f"{key}: last value = {values[-1]:.4f}")
+
+            if not self.is_s3:
+                try:
+                    fig, ax = plt.subplots()
+                    ax.plot(self.embedder._history['loss'])
+                    ax.set_ylabel('Loss')
+                    ax.set_xlabel('Epoch')
+                    ax.set_title('Training Loss')
+                    plt.savefig(os.path.join(self.save_path, 'training_loss.png'))
+                    plt.show()
+                except Exception as e:
+                    print(f"Error plotting history: {e}")
+
+        self._upload_model_to_s3()
+        wandb.finish()
 ```
