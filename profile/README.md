@@ -38,7 +38,7 @@
 width="80" height="100" alt="image" src="https://avatars.githubusercontent.com/u/102636528?v=4" > | <img 
 width="80" height="100" alt="image" src="https://avatars.githubusercontent.com/u/104704651?v=4" > | <img 
 width="80" height="100" alt="image" src="https://avatars.githubusercontent.com/u/33688069?v=4" > |
-|:---:|:---:|:---:|:---:|:---:|
+|:---:|:---:|:---:|:---:|
 | [**최은소**](https://github.com/esc-beep) | [**문채일**](https://github.com/chae2) | [**정민서**](https://github.com/M-J1nx) | [**박은규**](https://github.com/eunkyui) |
 | • PM <br> • 머신러닝 모델 개발  <br> • 데이터 엔지니어링 | • 머신러닝 모델 개발  <br> • 데이터 엔지니어링 | • 시스템 설계 <br> • 소프트웨어 개발 | • 프로젝트 멘토 <br> • 기술 자문 |
 
